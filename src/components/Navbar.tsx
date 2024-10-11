@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
+import { FaSearch } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
   const { user, logIn, logOut } = useUser();
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
         <form onSubmit={handleSubmit} className="flex-grow max-w-md mx-4">
           <div className="flex items-center">
             <input
-              className="appearance-none bg-white border border-gray-300 rounded-l-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 shadow-sm"
+              className="appearance-none bg-white border border-gray-300 rounded-l-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 shadow-sm h-10"
               type="text"
               placeholder="0x1234"
               aria-label="Flow address"
@@ -34,10 +35,11 @@ const Navbar: React.FC = () => {
               onChange={(e) => setAddress(e.target.value)}
             />
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg shadow-sm"
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-r-lg shadow-sm flex items-center justify-center h-10 w-12"
               type="submit"
+              aria-label="Search"
             >
-              Go
+              <FaSearch className="text-xl" />
             </button>
           </div>
         </form>
@@ -49,7 +51,7 @@ const Navbar: React.FC = () => {
           )}
           <button
             onClick={user.loggedIn ? logOut : logIn}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded flex items-center"
           >
             {user.loggedIn ? 'Logout' : 'Login'}
           </button>
