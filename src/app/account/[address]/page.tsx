@@ -49,7 +49,7 @@ export default function AccountPage() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Account Details</h1>
       <p className="text-xl mb-4">Address: {address}</p>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
+      <div className="bg-gray-50 p-4 rounded-lg mb-4">
         <p className="mb-2">Flow Balance: {accountSummary.flowBalance} FLOW</p>
         <p>Flow Available Balance: {accountSummary.flowAvailableBalance} FLOW</p>
       </div>

@@ -40,7 +40,7 @@ export const FungibleTokenCard: React.FC<FungibleTokenCardProps> = ({
     return (
         <>
             <div
-                className={`bg-white shadow-md rounded-lg p-4 mb-4 relative ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}`}
+                className={`bg-gray-50 shadow-md rounded-lg p-4 mb-4 relative ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}`}
                 onClick={handleClick}
             >
                 {logo && !imageError && (
@@ -58,9 +58,11 @@ export const FungibleTokenCard: React.FC<FungibleTokenCardProps> = ({
                 <h3 className="text-lg font-semibold mb-2 pr-14">
                     {balance.display?.name || balance.vaultType}
                 </h3>
-                <p className="text-gray-600 mb-2">
-                    Symbol: {balance.display?.symbol || 'N/A'}
-                </p>
+                {balance.display?.symbol && (
+                    <p className="text-gray-600 mb-2">
+                        Symbol: {balance.display.symbol}
+                    </p>
+                )}
                 <p className="text-gray-600 mb-2">
                     Balance: {balance.vaultBalance.toLocaleString()} {balance.display?.symbol}
                 </p>
