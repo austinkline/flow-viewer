@@ -26,8 +26,8 @@ export const FungibleTokenCard: React.FC<FungibleTokenCardProps> = ({
 
     const isClickable = currentUserAddress && currentUserAddress === viewedAddress;
 
-    const handleTransfer = async (receiverAddress: string, amount: string) => {
-        const txnId = await sendTokens(receiverAddress, parseFloat(amount), balance)
+    const handleTransfer = async (receiverAddresses: string[], amounts: string[]) => {
+        const txnId = await sendTokens(receiverAddresses, amounts.map(parseFloat), balance)
         setTransactionId(txnId)
     };
 

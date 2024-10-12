@@ -46,27 +46,29 @@ const TransactionPanel: React.FC = () => {
     }
 
     return (
-        <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg p-4 transform transition-transform duration-300 ease-in-out">
-            <h2 className="text-xl font-bold mb-4">Pending Transaction</h2>
-            <p>Transaction ID: {transactionId}</p>
+        <div className="fixed right-0 top-0 bottom-0 flex items-center z-50 mr-10">
+            <div className="bg-white shadow-lg p-6 rounded-l-lg w-80 h-1/2 overflow-y-auto">
+                <h2 className="text-xl font-bold mb-4">Pending Transaction</h2>
+                <p>Transaction ID: {transactionId}</p>
 
-            {pending && (
-                <div className="mt-4">
-                    <p className="text-blue-500">Pending...</p>
-                </div>
-            )}
+                {pending && (
+                    <div className="mt-4">
+                        <p className="text-blue-500">Pending...</p>
+                    </div>
+                )}
 
-            {errorMessage && (
-                <div className="mt-4">
-                    <p className="text-red-500">{errorMessage}</p>
-                </div>
-            )}
+                {errorMessage && (
+                    <div className="mt-4">
+                        <p className="text-red-500">{errorMessage}</p>
+                    </div>
+                )}
 
-            {!errorMessage && success && (
-                <div className="mt-4">
-                    <p className="text-green-500">{success}</p>
-                </div>
-            )}
+                {!errorMessage && success && (
+                    <div className="mt-4">
+                        <p className="text-green-500">{success}</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
