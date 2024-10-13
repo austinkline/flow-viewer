@@ -10,7 +10,8 @@
       "source": "./contracts/FtUtils.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xb61620f9a21a3360"
+        "testnet": "0xb61620f9a21a3360",
+        "mainnet": "0xa32e9280a8326dc5"
       }
     },
     "FungibleToken": {

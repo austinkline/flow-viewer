@@ -33,6 +33,13 @@
         "type": "file",
         "location": "testnet-account.pkey"
       }
+    },
+    "mainnet-account": {
+      "address": "0xa32e9280a8326dc5",
+      "key": {
+        "type": "file",
+        "location": "mainnet-account.pkey"
+      }
     }
   },
   "contracts": {
@@ -119,6 +126,11 @@
     },
     "testnet": {
       "testnet-account": [
+        "FtUtils"
+      ]
+    },
+    "mainnet": {
+      "mainnet-account": [
         "FtUtils"
       ]
     }

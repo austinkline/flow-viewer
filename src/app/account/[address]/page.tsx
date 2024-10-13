@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getAccountSummary, networkFromAddress } from '@/services/flow';
+import { getAccountSummary, networkFromAddress, setByNetwork } from '@/services/flow';
 import { AccountSummary } from '@/types/flow';
 import { FungibleTokenCard } from '@/components/FungibleTokenCard';
 import { useUser } from '@/contexts/UserContext';
+import * as fcl from '@onflow/fcl';
 
 export default function AccountPage() {
   const { address } = useParams();
@@ -13,8 +14,26 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useUser();
+  const [network, setNetwork] = useState<string>('');
 
-  const network = networkFromAddress(address as string);
+  const handleAccountNewtork = async() => {
+    const addressNetwork = networkFromAddress(address as string);
+    const currentNetwork = await fcl.config().get("flow.network");
+
+    console.log("handleAccountNewtork", addressNetwork, currentNetwork);
+
+    if(addressNetwork !== currentNetwork) {
+      setByNetwork(addressNetwork);
+    }
+
+    setNetwork(addressNetwork);
+  }
+
+  useEffect(() => {
+    if (!address) return;
+
+    handleAccountNewtork();
+  }, [address]);
 
   useEffect(() => {
     async function fetchAccountSummary() {
@@ -33,7 +52,7 @@ export default function AccountPage() {
     }
 
     fetchAccountSummary();
-  }, [address]);
+  }, [address, network]);
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading account summary...</div>;
@@ -59,9 +78,9 @@ export default function AccountPage() {
       <h2 className="text-2xl font-semibold mb-4">Token Balances</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {accountSummary.balances.map((balance, index) => (
-          <FungibleTokenCard 
-            key={index} 
-            balance={balance} 
+          <FungibleTokenCard
+            key={index}
+            balance={balance}
             currentUserAddress={user.addr}
             viewedAddress={address as string}
           />

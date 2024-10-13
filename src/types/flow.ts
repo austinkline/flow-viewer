@@ -36,3 +36,28 @@ export interface Path {
     domain: "public" | "storage"
     identifier: string
 }
+
+export interface FlowConfig {
+    networks: {[key: string]: string}
+    contracts: FlowConfigContracts
+}
+
+export interface FlowConfigContracts {
+    FtUtils: FlowConfigContract
+    FungibleToken: FlowConfigContract
+    MetadataViews: FlowConfigContract
+    FungibleTokenMetadataViews: FlowConfigContract
+    Burner: FlowConfigContract
+    ViewResolver: FlowConfigContract
+    NonFungibleToken: FlowConfigContract
+    FlowToken: FlowConfigContract
+}
+
+export interface FlowConfigContract {
+    source: string
+    aliases: FlowConfigContractAliases
+}
+
+export interface FlowConfigContractAliases {
+    [key: string]: string
+}

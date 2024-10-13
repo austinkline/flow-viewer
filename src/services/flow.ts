@@ -4,11 +4,17 @@ import { AccountSummary, Balance } from '@/types/flow';
 
 import * as fcl from '@onflow/fcl';
 import { TransactionStatus } from '@onflow/typedefs';
-import { Truculenta } from 'next/font/google';
+import { FlowConfig } from '@/types/flow';
+
+export const flowConfig: FlowConfig = flowJSON as unknown as FlowConfig;
 
 export const configure = (network: string) => {
     console.log("configuring flow", { network })
+    setByNetwork(network);
+    config.load({ flowJSON })
+}
 
+export const setByNetwork = (network: string) => {
     let acessNode = ""
     let discoveryWallet = ""
 
@@ -18,7 +24,7 @@ export const configure = (network: string) => {
             discoveryWallet = "https://fcl-discovery.onflow.org/testnet/authn"
             break
         case "mainnet":
-            acessNode = "https://access-mainnet.onflow.org"
+            acessNode = "https://mainnet.onflow.org"
             discoveryWallet = "https://fcl-discovery.onflow.org/authn"
             break
         case "emulator":
@@ -27,16 +33,15 @@ export const configure = (network: string) => {
             break
     }
 
-    config({
-        "flow.network": network,
-        "accessNode.api": acessNode,
-        "discovery.wallet": discoveryWallet,
-    }).load({ flowJSON })
+    fcl.config().put("flow.network", network);
+    fcl.config().put("accessNode.api", acessNode);
+    fcl.config().put("discovery.wallet", discoveryWallet);
 }
 
 export const getAccountSummary = async (address: string): Promise<AccountSummary | null> => {
+    const network = networkFromAddress(address);
     const result = await fcl.query({
-        cadence: `import "FtUtils"
+        cadence: `import FtUtils from ${flowConfig.contracts.FtUtils.aliases[network]}
 
 access(all) fun main(addr: Address): AnyStruct {
     let acct = getAuthAccount<auth(BorrowValue) &Account>(addr)
