@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getAccountSummary } from '@/services/flow';
+import { getAccountSummary, networkFromAddress } from '@/services/flow';
 import { AccountSummary } from '@/types/flow';
 import { FungibleTokenCard } from '@/components/FungibleTokenCard';
 import { useUser } from '@/contexts/UserContext';
@@ -13,6 +13,8 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useUser();
+
+  const network = networkFromAddress(address as string);
 
   useEffect(() => {
     async function fetchAccountSummary() {
@@ -48,7 +50,7 @@ export default function AccountPage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Account Details</h1>
-      <p className="text-xl mb-4">Address: {address}</p>
+      <p className="text-xl mb-4">Address: {address} ({network})</p>
       <div className="bg-gray-50 p-4 rounded-lg mb-4">
         <p className="mb-2">Flow Balance: {accountSummary.flowBalance} FLOW</p>
         <p>Flow Available Balance: {accountSummary.flowAvailableBalance} FLOW</p>
